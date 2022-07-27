@@ -327,6 +327,42 @@ def update_warpVector_color_by_name(warpVector_color_array_idx, **kwargs):
     color_by_array(warpVector_actor, array)
     ctrl.view_update()
 
+# Color Map Callbacks
+def use_preset(actor, preset):
+    lut = actor.GetMapper().GetLookupTable()
+    if preset == LookupTable.Rainbow:
+        lut.SetHueRange(0.666, 0.0)
+        lut.SetSaturationRange(1.0, 1.0)
+        lut.SetValueRange(1.0, 1.0)
+    elif preset == LookupTable.Inverted_Rainbow:
+        lut.SetHueRange(0.0, 0.666)
+        lut.SetSaturationRange(1.0, 1.0)
+        lut.SetValueRange(1.0, 1.0)
+    elif preset == LookupTable.Greyscale:
+        lut.SetHueRange(0.0, 0.0)
+        lut.SetSaturationRange(0.0, 0.0)
+        lut.SetValueRange(0.0, 1.0)
+    elif preset == LookupTable.Inverted_Greyscale:
+        lut.SetHueRange(0.0, 0.666)
+        lut.SetSaturationRange(0.0, 0.0)
+        lut.SetValueRange(1.0, 0.0)
+    lut.Build()
+
+@state.change("mesh_color_preset")
+def update_mesh_color_preset(mesh_color_preset, **kwargs):
+    use_preset(mesh_actor, mesh_color_preset)
+    ctrl.view_update()
+
+@state.change("contour_color_preset")
+def update_contour_color_preset(contour_color_preset, **kwargs):
+    use_preset(contour_actor, contour_color_preset)
+    ctrl.view_update()
+
+@state.change("warpVector_color_preset")
+def update_warpVector_color_preset(warpVector_color_preset, **kwargs):
+    use_preset(warpVector_actor, warpVector_color_preset)
+    ctrl.view_update()
+
 # -----------------------------------------------------------------------------
 # GUI elements
 # -----------------------------------------------------------------------------
