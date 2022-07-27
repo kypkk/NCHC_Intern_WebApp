@@ -9,7 +9,7 @@
  
  ## Trame
 
-**trame** - an open-source platform for creating interactive and powerful visual analytics applications. Based on **Python**, and leveraging platforms such as [**VTK**](https://vtk.org), [**ParaView**](https://www.paraview.org), and [**Vega**](#), it is possible to create web-based applications in minutes.
+**trame** - An open-source platform for creating interactive and powerful visual analytics applications. Based on **Python**, and leveraging platforms such as [**VTK**](https://vtk.org), [**ParaView**](https://www.paraview.org), and [**Vega**](#), it is possible to create web-based applications in minutes.
 
 ## Installation
 
