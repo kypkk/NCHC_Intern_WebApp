@@ -66,9 +66,33 @@ default_array = dataset_arrays[0]
 default_min, default_max = default_array.get("range")
 
 # Mesh
+mesh_mapper = vtkDataSetMapper()
+mesh_mapper.SetInputConnection(reader.GetOutputPort())
+mesh_actor = vtkActor()
+mesh_actor.SetMapper(mesh_mapper)
+renderer.AddActor(mesh_actor)
+
 # Mesh: Setup default representation to surface
+mesh_actor.GetProperty().SetRepresentationToSurface()
+mesh_actor.GetProperty().SetPointSize(1)
+mesh_actor.GetProperty().EdgeVisibilityOff()
+
 # Mesh: Apply rainbow color map
+mesh_lut = mesh_mapper.GetLookupTable()
+mesh_lut.SetHueRange(0.666, 0.0)
+mesh_lut.SetSaturationRange(1.0, 1.0)
+mesh_lut.SetValueRange(1.0, 1.0)
+mesh_lut.Build()
+
 # Mesh: Color by default array
+mesh_mapper.SelectColorArray(default_array.get("text"))
+mesh_mapper.GetLookupTable().SetRange(default_min, default_max)
+if default_array.get("type") == vtkDataObject.FIELD_ASSOCIATION_POINTS:
+    mesh_mapper.SetScalarModeToUsePointFieldData()
+else:
+    mesh_mapper.SetScalarModeToUseCellFieldData()
+mesh_mapper.SetScalarVisibility(True)
+mesh_mapper.SetUseLookupTableScalarRange(True)
 
 # Contour
 # Contour: ContourBy default array
