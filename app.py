@@ -296,6 +296,37 @@ def update_warpVector_representation(warpVector_representation, **kwargs):
     update_representation(warpVector_actor, warpVector_representation)
     ctrl.view_update()
 
+# Color By Callbacks
+def color_by_array(actor, array):
+    _min, _max = array.get("range")
+    mapper = actor.GetMapper()
+    mapper.SelectColorArray(array.get("text"))
+    mapper.GetLookupTable().SetRange(_min, _max)
+    if array.get("type") == vtkDataObject.FIELD_ASSOCIATION_POINTS:
+        mesh_mapper.SetScalarModeToUsePointFieldData()
+    else:
+        mesh_mapper.SetScalarModeToUseCellFieldData()
+    mapper.SetScalarVisibility(True)
+    mapper.SetUseLookupTableScalarRange(True)
+
+@state.change("mesh_color_array_idx")
+def update_mesh_color_by_name(mesh_color_array_idx, **kwargs):
+    array = dataset_arrays[mesh_color_array_idx]
+    color_by_array(mesh_actor, array)
+    ctrl.view_update()
+
+@state.change("contour_color_array_idx")
+def update_contour_color_by_name(contour_color_array_idx, **kwargs):
+    array = dataset_arrays[contour_color_array_idx]
+    color_by_array(contour_actor, array)
+    ctrl.view_update()
+
+@state.change("warpVector_color_array_idx")
+def update_warpVector_color_by_name(warpVector_color_array_idx, **kwargs):
+    array = dataset_arrays[warpVector_color_array_idx]
+    color_by_array(warpVector_actor, array)
+    ctrl.view_update()
+
 # -----------------------------------------------------------------------------
 # GUI elements
 # -----------------------------------------------------------------------------
