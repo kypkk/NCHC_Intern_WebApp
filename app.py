@@ -44,6 +44,26 @@ reader.SetFileName(os.path.join(CURRENT_DIRECTORY, "./data/1-full_model.vtu"))
 reader.Update()
 
 # Extract Array/Field information
+dataset_arrays = []
+fields = [
+    (reader.GetOutput().GetPointData(), vtkDataObject.FIELD_ASSOCIATION_POINTS),
+    (reader.GetOutput().GetCellData(), vtkDataObject.FIELD_ASSOCIATION_CELLS),
+]
+for field in fields:
+    field_arrays, association = field
+    for i in range(field_arrays.GetNumberOfArrays()):
+        array = field_arrays.GetArray(i)
+        array_range = array.GetRange()
+        dataset_arrays.append(
+            {
+                "text": array.GetName(),
+                "value": i,
+                "range": list(array_range),
+                "type": association,
+            }
+        )
+default_array = dataset_arrays[0]
+default_min, default_max = default_array.get("range")
 
 # Mesh
 # Mesh: Setup default representation to surface
