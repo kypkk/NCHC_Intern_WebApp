@@ -379,6 +379,30 @@ def update_warpVector_opacity(warpVector_opacity, **kwargs):
     contour_actor.GetProperty().SetOpacity(warpVector_opacity)
     ctrl.view_update()
 
+# Contour Callbacks
+@state.change("contour_by_array_idx")
+def update_contour_by(contour_by_array_idx, **kwargs):
+    array = dataset_arrays[contour_by_array_idx]
+    contour_min, contour_max = array.get("range")
+    contour_step = 0.01 * (contour_max - contour_min)
+    contour_value = 0.5 * (contour_max + contour_min)
+    contour.SetInputArrayToProcess(0, 0, 0, array.get("type"), array.get("text"))
+    contour.SetValue(0, contour_value)
+
+    # Update UI
+    state.contour_min = contour_min
+    state.contour_max = contour_max
+    state.contour_value = contour_value
+    state.contour_step = contour_step
+
+    # Update View
+    ctrl.view_update()
+
+@state.change("contour_value")
+def update_contour_value(contour_value, **kwargs):
+    contour.SetValue(0, float(contour_value))
+    ctrl.view_update()
+
 # -----------------------------------------------------------------------------
 # GUI elements
 # -----------------------------------------------------------------------------
