@@ -363,6 +363,22 @@ def update_warpVector_color_preset(warpVector_color_preset, **kwargs):
     use_preset(warpVector_actor, warpVector_color_preset)
     ctrl.view_update()
 
+# Opacity Callbacks
+@state.change("mesh_opacity")
+def update_mesh_opacity(mesh_opacity, **kwargs):
+    mesh_actor.GetProperty().SetOpacity(mesh_opacity)
+    ctrl.view_update()
+
+@state.change("contour_opacity")
+def update_contour_opacity(contour_opacity, **kwargs):
+    contour_actor.GetProperty().SetOpacity(contour_opacity)
+    ctrl.view_update()
+
+@state.change("warpVector_opacity")
+def update_warpVector_opacity(warpVector_opacity, **kwargs):
+    contour_actor.GetProperty().SetOpacity(warpVector_opacity)
+    ctrl.view_update()
+
 # -----------------------------------------------------------------------------
 # GUI elements
 # -----------------------------------------------------------------------------
