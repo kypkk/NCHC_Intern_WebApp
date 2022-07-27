@@ -227,6 +227,12 @@ state.setdefault("active_ui", None)
 # Callbacks
 # -----------------------------------------------------------------------------
 
+# Cube_Axes_Callback
+@state.change("cube_axes_visibility")
+def update_cube_axes_visibility(cube_axes_visibility, **kwargs):
+    cube_axes.SetVisibility(cube_axes_visibility)
+    ctrl.view_update()
+
 # -----------------------------------------------------------------------------
 # GUI elements
 # -----------------------------------------------------------------------------
