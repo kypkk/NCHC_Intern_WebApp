@@ -133,6 +133,45 @@ else:
 contour_mapper.SetScalarVisibility(True)
 contour_mapper.SetUseLookupTableScalarRange(True)
 
+# WarpVector
+warpVector = vtkWarpVector()
+warpVector.SetInputConnection(reader.GetOutputPort())
+warpVector_mapper = vtkDataSetMapper()
+warpVector_mapper.SetInputConnection(warpVector.GetOutputPort())
+warpVector_actor = vtkActor()
+warpVector_actor.SetMapper(warpVector_mapper)
+renderer.AddActor(warpVector_actor)
+warpVector_actor.SetVisibility(0)
+
+# warpVector: warpVector By default array
+scale_factor = 1
+warpVector.SetInputArrayToProcess(
+    0, 0, 0, default_array.get("type"), "vector_006"
+)
+warpVector.SetScaleFactor(scale_factor)
+
+
+# warpVector: Setup default representation to surface
+warpVector_actor.GetProperty().SetRepresentationToSurface()
+warpVector_actor.GetProperty().SetPointSize(1)
+warpVector_actor.GetProperty().EdgeVisibilityOff()
+
+# warpVector: Apply rainbow color map
+warpVector_lut = warpVector_mapper.GetLookupTable()
+warpVector_lut.SetHueRange(0.666, 0.0)
+warpVector_lut.SetSaturationRange(1.0, 1.0)
+warpVector_lut.SetValueRange(1.0, 1.0)
+warpVector_lut.Build()
+
+# warpVector: Color by default array
+warpVector_mapper.SelectColorArray(default_array.get("text"))
+warpVector_mapper.GetLookupTable().SetRange(default_min, default_max)
+if default_array.get("type") == vtkDataObject.FIELD_ASSOCIATION_POINTS:
+    warpVector_mapper.SetScalarModeToUsePointFieldData()
+else:
+    warpVector_mapper.SetScalarModeToUseCellFieldData()
+warpVector_mapper.SetScalarVisibility(True)
+warpVector_mapper.SetUseLookupTableScalarRange(True)
 
 # Cube Axes
 # Cube Axes: Boundaries, camera, and styling
