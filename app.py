@@ -209,16 +209,314 @@ state, ctrl = server.state, server.controller
 # GUI elements
 # -----------------------------------------------------------------------------
 
+def standard_buttons():
+    vuetify.VCheckbox(
+        v_model=("cube_axes_visibility", True),
+        on_icon="mdi-cube-outline",
+        off_icon="mdi-cube-off-outline",
+        classes="mx-1",
+        hide_details=True,
+        dense=True,
+    )
+    vuetify.VCheckbox(
+        v_model="$vuetify.theme.dark",
+        on_icon="mdi-lightbulb-off-outline",
+        off_icon="mdi-lightbulb-outline",
+        classes="mx-1",
+        hide_details=True,
+        dense=True,
+    )
+    vuetify.VCheckbox(
+        v_model=("viewMode", "local"), # VtkRemoteLocalView => {namespace}Mode=['local', 'remote']
+        on_icon="mdi-lan-disconnect",
+        off_icon="mdi-lan-connect",
+        true_value="local",
+        false_value="remote",
+        classes="mx-1",
+        hide_details=True,
+        dense=True,
+    )
+    with vuetify.VBtn(icon=True, click="$refs.view.resetCamera()"):
+        vuetify.VIcon("mdi-crop-free")
+
+def pipeline_widget():
+    trame.GitTree(
+        sources=(
+            "pipeline",
+            [
+                {"id": "1", "parent": "0", "visible": 1, "name": "Mesh"},
+                {"id": "2", "parent": "1", "visible": 0, "name": "Contour"},
+                {"id": "3", "parent": "1", "visible": 0, "name": "WarpbyVector"},
+            ],
+        ),
+        actives_change=(actives_change, "[$event]"),
+        visibility_change=(visibility_change, "[$event]"),
+    )
+
+def ui_card(title, ui_name):
+    with vuetify.VCard(v_show=f"active_ui == '{ui_name}'"):
+        vuetify.VCardTitle(
+            title,
+            classes="grey lighten-1 py-1 grey--text text--darken-3",
+            style="user-select: none; cursor: pointer",
+            hide_details=True,
+            dense=True,
+        )
+        content = vuetify.VCardText(classes="py-2")
+    return content
+
+def mesh_card():
+    with ui_card(title="Mesh", ui_name="mesh"):
+        vuetify.VSelect(
+            # Representation
+            v_model=("mesh_representation", Representation.Surface),
+            items=(
+                "representations",
+                [
+                    {"text": "Points", "value": 0},
+                    {"text": "Wireframe", "value": 1},
+                    {"text": "Surface", "value": 2},
+                    {"text": "SurfaceWithEdges", "value": 3},
+                ],
+            ),
+            label="Representation",
+            hide_details=True,
+            dense=True,
+            outlined=True,
+            classes="pt-1",
+        )
+        with vuetify.VRow(classes="pt-2", dense=True):
+            with vuetify.VCol(cols="6"):
+                vuetify.VSelect(
+                    # Color By
+                    label="Color by",
+                    v_model=("mesh_color_array_idx", 0),
+                    items=("array_list", dataset_arrays),
+                    hide_details=True,
+                    dense=True,
+                    outlined=True,
+                    classes="pt-1",
+                )
+            with vuetify.VCol(cols="6"):
+                vuetify.VSelect(
+                    # Color Map
+                    label="Colormap",
+                    v_model=("mesh_color_preset", LookupTable.Rainbow),
+                    items=(
+                        "colormaps",
+                        [
+                            {"text": "Rainbow", "value": 0},
+                            {"text": "Inv Rainbow", "value": 1},
+                            {"text": "Greyscale", "value": 2},
+                            {"text": "Inv Greyscale", "value": 3},
+                        ],
+                    ),
+                    hide_details=True,
+                    dense=True,
+                    outlined=True,
+                    classes="pt-1",
+                )
+        vuetify.VSlider(
+            # Opacity
+            v_model=("mesh_opacity", 1.0),
+            min=0,
+            max=1,
+            step=0.1,
+            label="Opacity",
+            classes="mt-1",
+            hide_details=True,
+            dense=True,
+        )
+
+def contour_card():
+    with ui_card(title="Contour", ui_name="contour"):
+        vuetify.VSelect(
+            # Contour By
+            label="Contour by",
+            v_model=("contour_by_array_idx", 0),
+            items=("array_list", dataset_arrays),
+            hide_details=True,
+            dense=True,
+            outlined=True,
+            classes="pt-1",
+        )
+        vuetify.VSlider(
+            # Contour Value
+            v_model=("contour_value", contour_value),
+            min=("contour_min", default_min),
+            max=("contour_max", default_max),
+            step=("contour_step", 0.01 * (default_max - default_min)),
+            label="Value",
+            classes="my-1",
+            hide_details=True,
+            dense=True,
+        )
+        vuetify.VSelect(
+            # Representation
+            v_model=("contour_representation", Representation.Surface),
+            items=(
+                "representations",
+                [
+                    {"text": "Points", "value": 0},
+                    {"text": "Wireframe", "value": 1},
+                    {"text": "Surface", "value": 2},
+                    {"text": "SurfaceWithEdges", "value": 3},
+                ],
+            ),
+            label="Representation",
+            hide_details=True,
+            dense=True,
+            outlined=True,
+            classes="pt-1",
+        )
+        with vuetify.VRow(classes="pt-2", dense=True):
+            with vuetify.VCol(cols="6"):
+                vuetify.VSelect(
+                    # Color By
+                    label="Color by",
+                    v_model=("contour_color_array_idx", 0),
+                    items=("array_list", dataset_arrays),
+                    hide_details=True,
+                    dense=True,
+                    outlined=True,
+                    classes="pt-1",
+                )
+            with vuetify.VCol(cols="6"):
+                vuetify.VSelect(
+                    # Color Map
+                    label="Colormap",
+                    v_model=("contour_color_preset", LookupTable.Rainbow),
+                    items=(
+                        "colormaps",
+                        [
+                            {"text": "Rainbow", "value": 0},
+                            {"text": "Inv Rainbow", "value": 1},
+                            {"text": "Greyscale", "value": 2},
+                            {"text": "Inv Greyscale", "value": 3},
+                        ],
+                    ),
+                    hide_details=True,
+                    dense=True,
+                    outlined=True,
+                    classes="pt-1",
+                )
+        vuetify.VSlider(
+            # Opacity
+            v_model=("contour_opacity", 1.0),
+            min=0,
+            max=1,
+            step=0.1,
+            label="Opacity",
+            classes="mt-1",
+            hide_details=True,
+            dense=True,
+        )
+
+def warpVector_card():
+    with ui_card(title="WarpbyVector", ui_name="WarpbyVector"):
+        vuetify.VSelect(
+            # Vectors
+            label="Vectors",
+            v_model=("warp_vectors", 0),
+            items=("array_list", dataset_arrays),
+            hide_details=True,
+            dense=True,
+            outlined=True,
+            classes="pt-1",
+        )
+        vuetify.VSlider(
+            # Scale factor
+            v_model=("scale_factor", scale_factor),
+            min=("factor_min", 1),
+            max=("factor_max", 100),
+            step=("scale_step",  0.0001 * (100 - 1)),
+            label="Scale Factor",
+            classes="my-1",
+            hide_details=True,
+            dense=True,
+        )
+        vuetify.VSelect(
+            # Representation
+            v_model=("warpVector_representation", Representation.Surface),
+            items=(
+                "representations",
+                [
+                    {"text": "Points", "value": 0},
+                    {"text": "Wireframe", "value": 1},
+                    {"text": "Surface", "value": 2},
+                    {"text": "SurfaceWithEdges", "value": 3},
+                ],
+            ),
+            label="Representation",
+            hide_details=True,
+            dense=True,
+            outlined=True,
+            classes="pt-1",
+        )
+        with vuetify.VRow(classes="pt-2", dense=True):
+            with vuetify.VCol(cols="6"):
+                vuetify.VSelect(
+                    # Color By
+                    label="Color by",
+                    v_model=("warpVector_color_array_idx", 0),
+                    items=("array_list", dataset_arrays),
+                    hide_details=True,
+                    dense=True,
+                    outlined=True,
+                    classes="pt-1",
+                )
+            with vuetify.VCol(cols="6"):
+                vuetify.VSelect(
+                    # Color Map
+                    label="Colormap",
+                    v_model=("warpVector_color_preset", LookupTable.Rainbow),
+                    items=(
+                        "colormaps",
+                        [
+                            {"text": "Rainbow", "value": 0},
+                            {"text": "Inv Rainbow", "value": 1},
+                            {"text": "Greyscale", "value": 2},
+                            {"text": "Inv Greyscale", "value": 3},
+                        ],
+                    ),
+                    hide_details=True,
+                    dense=True,
+                    outlined=True,
+                    classes="pt-1",
+                )
+        vuetify.VSlider(
+            # Opacity
+            v_model=("warpVector_opacity", 1.0),
+            min=0,
+            max=1,
+            step=0.1,
+            label="Opacity",
+            classes="mt-1",
+            hide_details=True,
+            dense=True,
+        )
+
 # -----------------------------------------------------------------------------
 # GUI
 # -----------------------------------------------------------------------------
 
-with SinglePageLayout(server) as layout:
-    layout.title.set_text("Viewer")
+with SinglePageWithDrawerLayout(server) as layout:
+    layout.title.set_text("App")
 
     with layout.toolbar:
         # toolbar components
-        pass
+        vuetify.VSpacer()
+        vuetify.VDivider(vertical=True, classes="mx-2")
+        standard_buttons()
+
+    with layout.drawer as drawer:
+        #drawer components
+        drawer.width = 325
+        pipeline_widget()
+        vuetify.VDivider(classes="mb-2")
+        mesh_card()
+        contour_card()
+        warpVector_card()
 
     with layout.content:
         # content components
@@ -226,7 +524,9 @@ with SinglePageLayout(server) as layout:
             fluid=True,
             classes="pa-0 fill-height",
         ):
-            view = vtk.VtkLocalView(renderWindow)
+            local_view = vtk.VtkLocalView(renderWindow)
+            remote_view = vtk.VtkRemoteView(renderWindow)
+            view = local_view
             ctrl.view_update = view.update
             ctrl.view_reset_camera = view.reset_camera
             ctrl.on_server_ready.add(view.update)
