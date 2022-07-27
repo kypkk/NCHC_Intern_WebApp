@@ -39,6 +39,9 @@ renderWindowInteractor.SetRenderWindow(renderWindow)
 renderWindowInteractor.GetInteractorStyle().SetCurrentStyleToTrackballCamera()
 
 # Read Data
+reader = vtkXMLUnstructuredGridReader()
+reader.SetFileName(os.path.join(CURRENT_DIRECTORY, "./data/1-full_model.vtu"))
+reader.Update()
 
 # Extract Array/Field information
 
