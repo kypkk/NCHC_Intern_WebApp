@@ -1,4 +1,5 @@
 # NCHC_Intern_WebApp
+
 <p align="center">
   <a href="https://www.nchc.org.tw" target="blank"><img src="https://covid-19.nchc.org.tw/assets/img/logo.png" width="150" alt="NCHC Logo" /></a>
     <a href="https://kitware.github.io/trame/
@@ -29,19 +30,21 @@
 
 ### Tech Stack
 
-* Trame
-    * A [**Python**](https://www.python.org) integration framework to easily build web applications
-* VTK
-    * [**VTK**](https://vtk.org/about/#overview)(*Visualization Toolkit*) is for 3D computer graphics, modeling, image processing, volume rendering, scientific visualization, and 2D plotting.
-* Vuetify
-    * A [**Vue**](https://vuejs.org) UI Library with beautifully handcrafted Material Components
+- Trame
+  - A [**Python**](https://www.python.org) integration framework to easily build web applications
+- VTK
+  - [**VTK**](https://vtk.org/about/#overview)(_Visualization Toolkit_) is for 3D computer graphics, modeling, image processing, volume rendering, scientific visualization, and 2D plotting.
+- Vuetify
+  - A [**Vue**](https://vuejs.org) UI Library with beautifully handcrafted Material Components
 
 ### APP_URL
-#### localhost:8080
+
+#### http://localhost:8080
 
 ## Development
 
 ### Requirements
+
 ```zsh
 ❯ git clone https://github.com/kypkk/NCHC_Intern_WebApp.git
 
@@ -49,9 +52,10 @@
 
 ❯ pip install requirements.txt
 ```
+
 ### Guides
 
-[**VTK in Trame**](https://kitware.github.io/trame/docs/tutorial-vtk.html)
-[**Vuetify in Trame**](https://kitware.github.io/trame/docs/tutorial-html.html)
-[**Vuetify Components**](https://vuetifyjs.com/en/components/buttons/)
-[**Useful VTK Examples**](https://kitware.github.io/vtk-examples/site/Python/)
+[**VTK in Trame**](https://kitware.github.io/trame/docs/tutorial-vtk.html)\
+[**Vuetify in Trame**](https://kitware.github.io/trame/docs/tutorial-html.html)\
+[**Vuetify Components**](https://vuetifyjs.com/en/components/buttons/)\
+[**Useful VTK Examples**](https://kitware.github.io/vtk-examples/site/Python/)\
