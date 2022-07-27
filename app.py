@@ -261,6 +261,41 @@ def visibility_change(event):
         warpVector_actor.SetVisibility(_visibility)
     ctrl.view_update()
 
+# Representation Callbacks
+def update_representation(actor, mode):
+    property = actor.GetProperty()
+    if mode == Representation.Points:
+        property.SetRepresentationToPoints()
+        property.SetPointSize(5)
+        property.EdgeVisibilityOff()
+    elif mode == Representation.Wireframe:
+        property.SetRepresentationToWireframe()
+        property.SetPointSize(1)
+        property.EdgeVisibilityOff()
+    elif mode == Representation.Surface:
+        property.SetRepresentationToSurface()
+        property.SetPointSize(1)
+        property.EdgeVisibilityOff()
+    elif mode == Representation.SurfaceWithEdges:
+        property.SetRepresentationToSurface()
+        property.SetPointSize(1)
+        property.EdgeVisibilityOn()
+
+@state.change("mesh_representation")
+def update_mesh_representation(mesh_representation, **kwargs):
+    update_representation(mesh_actor, mesh_representation)
+    ctrl.view_update()
+
+@state.change("contour_representation")
+def update_contour_representation(contour_representation, **kwargs):
+    update_representation(contour_actor, contour_representation)
+    ctrl.view_update()
+
+@state.change("warpVector_representation")
+def update_warpVector_representation(warpVector_representation, **kwargs):
+    update_representation(warpVector_actor, warpVector_representation)
+    ctrl.view_update()
+
 # -----------------------------------------------------------------------------
 # GUI elements
 # -----------------------------------------------------------------------------
