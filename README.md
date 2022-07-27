@@ -60,4 +60,4 @@
 [**VTK in Trame**](https://kitware.github.io/trame/docs/tutorial-vtk.html)\
 [**Vuetify in Trame**](https://kitware.github.io/trame/docs/tutorial-html.html)\
 [**Vuetify Components**](https://vuetifyjs.com/en/components/buttons/)\
-[**Useful VTK Examples**](https://kitware.github.io/vtk-examples/site/Python/)\
+[**Useful VTK Examples**](https://kitware.github.io/vtk-examples/site/Python/)
