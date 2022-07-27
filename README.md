@@ -39,4 +39,17 @@
 ### APP_URL
 #### localhost:8080
 
-## Dev_Guide
+## Development
+
+### Requirements
+```zsh
+git clone https://github.com/kypkk/NCHC_Intern_WebApp.git
+cd NCHC_Intern_WebApp
+pip install requirements.txt
+```
+### Guides
+
+[**VTK in Trame**](https://kitware.github.io/trame/docs/tutorial-vtk.html)
+[**Vuetify in Trame**](https://kitware.github.io/trame/docs/tutorial-html.html)
+[**Vuetify Components**](https://vuetifyjs.com/en/components/buttons/)
+[**Useful VTK Examples**](https://kitware.github.io/vtk-examples/site/Python/)
