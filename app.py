@@ -1,8 +1,17 @@
 import os
 
 from trame.app import get_server
-from trame.ui.vuetify import SinglePageLayout
-from trame.widgets import vtk, vuetify
+from trame.ui.vuetify import SinglePageWithDrawerLayout
+from trame.widgets import vtk, vuetify, trame
+
+from vtkmodules.vtkCommonDataModel import vtkDataObject
+from vtkmodules.vtkFiltersCore import vtkContourFilter
+from vtkmodules.vtkFiltersGeneral import vtkWarpVector
+from vtkmodules.vtkCommonTransforms import vtkTransform
+from vtkmodules.vtkIOXML import vtkXMLUnstructuredGridReader
+from vtkmodules.vtkRenderingAnnotation import vtkCubeAxesActor, vtkScalarBarActor
+from vtkmodules.vtkInteractionWidgets import vtkScalarBarWidget
+
 
 from vtkmodules.vtkRenderingCore import (
     vtkActor,
@@ -25,6 +34,17 @@ CURRENT_DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 # Constants
 # -----------------------------------------------------------------------------
 
+class Representation:
+    Points = 0
+    Wireframe = 1
+    Surface = 2
+    SurfaceWithEdges = 3
+
+class LookupTable:
+    Rainbow = 0
+    Inverted_Rainbow = 1
+    Greyscale = 2
+    Inverted_Greyscale = 3
 
 # -----------------------------------------------------------------------------
 # VTK pipeline
@@ -200,6 +220,8 @@ renderer.AddActor(scalar_bar)
 
 server = get_server()
 state, ctrl = server.state, server.controller
+
+state.setdefault("active_ui", None)
 
 # -----------------------------------------------------------------------------
 # Callbacks
