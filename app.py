@@ -233,6 +233,34 @@ def update_cube_axes_visibility(cube_axes_visibility, **kwargs):
     cube_axes.SetVisibility(cube_axes_visibility)
     ctrl.view_update()
 
+# Selection Change
+def actives_change(ids):
+    _id = ids[0]
+    if _id == "1":  # Mesh
+        state.active_ui = "mesh"
+        scalar_bar.SetLookupTable(mesh_lut)
+    elif _id == "2":  # Contour
+        state.active_ui = "contour"
+        scalar_bar.SetLookupTable(contour_lut)
+    elif _id == "3":  # warpVector
+        state.active_ui = "WarpbyVector"
+        scalar_bar.SetLookupTable(warpVector_lut)
+    else:
+        state.active_ui = "nothing"
+
+# Visibility Change
+def visibility_change(event):
+    _id = event["id"]
+    _visibility = event["visible"]
+
+    if _id == "1":  # Mesh
+        mesh_actor.SetVisibility(_visibility)
+    elif _id == "2":  # Contour
+        contour_actor.SetVisibility(_visibility)
+    elif _id == "3":  # warpVector
+        warpVector_actor.SetVisibility(_visibility)
+    ctrl.view_update()
+
 # -----------------------------------------------------------------------------
 # GUI elements
 # -----------------------------------------------------------------------------
