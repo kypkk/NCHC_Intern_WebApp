@@ -403,6 +403,30 @@ def update_contour_value(contour_value, **kwargs):
     contour.SetValue(0, float(contour_value))
     ctrl.view_update()
 
+# warpbyVector Callbacks
+@state.change("warp_vectors")
+def update_contour_by(warp_vectors, **kwargs):
+    array = dataset_arrays[warp_vectors]
+    factor_min, factor_max = 1, 100
+    scale_step = 0.0001 * (factor_max - factor_min)
+    scale_factor = 1
+    warpVector.SetInputArrayToProcess(0, 0, 0, array.get("type"), array.get("text"))
+    warpVector.SetScaleFactor(scale_factor)
+
+    # Update UI
+    state.factor_min = factor_min
+    state.factor_max = factor_max
+    state.scale_step = scale_step 
+    state.scale_factor = scale_factor
+
+    # Update View
+    ctrl.view_update()
+
+@state.change("scale_factor")
+def update_scale_factor(scale_factor, **kwargs):
+    warpVector.SetScaleFactor(float(scale_factor))
+    ctrl.view_update()
+
 # -----------------------------------------------------------------------------
 # GUI elements
 # -----------------------------------------------------------------------------
