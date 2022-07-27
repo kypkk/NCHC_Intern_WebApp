@@ -95,10 +95,44 @@ mesh_mapper.SetScalarVisibility(True)
 mesh_mapper.SetUseLookupTableScalarRange(True)
 
 # Contour
+contour = vtkContourFilter()
+contour.SetInputConnection(reader.GetOutputPort())
+contour_mapper = vtkDataSetMapper()
+contour_mapper.SetInputConnection(contour.GetOutputPort())
+contour_actor = vtkActor()
+contour_actor.SetMapper(contour_mapper)
+renderer.AddActor(contour_actor)
+contour_actor.SetVisibility(0)
+
 # Contour: ContourBy default array
+contour_value = 0.5 * (default_max + default_min)
+contour.SetInputArrayToProcess(
+    0, 0, 0, default_array.get("type"), default_array.get("text")
+)
+contour.SetValue(0, contour_value)
+
 # Contour: Setup default representation to surface
+contour_actor.GetProperty().SetRepresentationToSurface()
+contour_actor.GetProperty().SetPointSize(1)
+contour_actor.GetProperty().EdgeVisibilityOff()
+
 # Contour: Apply rainbow color map
+contour_lut = contour_mapper.GetLookupTable()
+contour_lut.SetHueRange(0.666, 0.0)
+contour_lut.SetSaturationRange(1.0, 1.0)
+contour_lut.SetValueRange(1.0, 1.0)
+contour_lut.Build()
+
 # Contour: Color by default array
+contour_mapper.SelectColorArray(default_array.get("text"))
+contour_mapper.GetLookupTable().SetRange(default_min, default_max)
+if default_array.get("type") == vtkDataObject.FIELD_ASSOCIATION_POINTS:
+    contour_mapper.SetScalarModeToUsePointFieldData()
+else:
+    contour_mapper.SetScalarModeToUseCellFieldData()
+contour_mapper.SetScalarVisibility(True)
+contour_mapper.SetUseLookupTableScalarRange(True)
+
 
 # Cube Axes
 # Cube Axes: Boundaries, camera, and styling
