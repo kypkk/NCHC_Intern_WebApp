@@ -10,7 +10,7 @@
  
  ## Trame
 
-**trame** - An open-source platform for creating interactive and powerful visual analytics applications. Based on **Python**, and leveraging platforms such as [**VTK**](https://vtk.org), [**ParaView**](https://www.paraview.org), and [**Vega**](#), it is possible to create web-based applications in minutes.
+**Trame** - An open-source platform for creating interactive and powerful visual analytics applications. Based on [**Python**](https://www.python.org), and leveraging platforms such as [**VTK**](https://vtk.org), [**ParaView**](https://www.paraview.org), and [**Vega**](#), it is possible to create web-based applications in minutes.
 
 ## Installation
 
@@ -32,8 +32,8 @@
 
 - Trame
   - A [**Python**](https://www.python.org) integration framework to easily build web applications
-- VTK
-  - [**VTK**](https://vtk.org/about/#overview)(_Visualization Toolkit_) is for 3D computer graphics, modeling, image processing, volume rendering, scientific visualization, and 2D plotting.
+- VTK(Visualization Toolkit)
+  - A [**tool**](https://vtk.org) for 3D computer graphics, modeling, image processing, volume rendering, scientific visualization, and 2D plotting.
 - Vuetify
   - A [**Vue**](https://vuejs.org) UI Library with beautifully handcrafted Material Components
 
