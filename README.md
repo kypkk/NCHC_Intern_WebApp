@@ -33,7 +33,7 @@
 - Trame
   - A [**Python**](https://www.python.org) integration framework to easily build web applications
 - VTK(Visualization Toolkit)
-  - A [**tool**](https://vtk.org) for 3D computer graphics, modeling, image processing, volume rendering, scientific visualization, and 2D plotting.
+  - A [**tool**](https://vtk.org) for 3D computer graphics, modeling, image processing, volume rendering, scientific visualization, and 2D plotting
 - Vuetify
   - A [**Vue**](https://vuejs.org) UI Library with beautifully handcrafted Material Components
 
