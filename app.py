@@ -187,6 +187,13 @@ cube_axes.SetFlyModeToOuterEdges()
 
 renderer.ResetCamera()
 
+# create the scalar_bar
+scalar_bar = vtkScalarBarActor()
+scalar_bar.SetOrientationToHorizontal()
+scalar_bar.SetLookupTable(mesh_lut)
+
+renderer.AddActor(scalar_bar)
+
 # -----------------------------------------------------------------------------
 # Trame setup
 # -----------------------------------------------------------------------------
