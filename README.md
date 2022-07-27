@@ -1,7 +1,7 @@
 # NCHC_Intern_WebApp
 
 <p align="center">
-  <a href="https://www.nchc.org.tw" target="blank"><img src="https://covid-19.nchc.org.tw/assets/img/logo.png" width="150" alt="NCHC Logo" /></a>
+  <a href="https://www.nchc.org.tw" target="blank"><img src="https://covid-19.nchc.org.tw/assets/img/logo.png" width="120" alt="NCHC Logo" /></a>
     <a href="https://kitware.github.io/trame/
 " target="blank"><img src="https://i.imgur.com/VkbEnlL.png" width="120" alt="Trame Logo" /></a>
 </p>
