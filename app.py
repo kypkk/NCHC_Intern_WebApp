@@ -174,7 +174,16 @@ warpVector_mapper.SetScalarVisibility(True)
 warpVector_mapper.SetUseLookupTableScalarRange(True)
 
 # Cube Axes
+transform = vtkTransform()
+transform.Translate(1.0, 0.0, 0.0)
+cube_axes = vtkCubeAxesActor()
+cube_axes.SetUserTransform(transform)
+renderer.AddActor(cube_axes)
+
 # Cube Axes: Boundaries, camera, and styling
+cube_axes.SetBounds(warpVector_actor.GetBounds())
+cube_axes.SetCamera(renderer.GetActiveCamera())
+cube_axes.SetFlyModeToOuterEdges()
 
 renderer.ResetCamera()
 
