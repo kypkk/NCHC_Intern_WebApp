@@ -43,9 +43,11 @@
 
 ### Requirements
 ```zsh
-git clone https://github.com/kypkk/NCHC_Intern_WebApp.git
-cd NCHC_Intern_WebApp
-pip install requirements.txt
+❯ git clone https://github.com/kypkk/NCHC_Intern_WebApp.git
+
+❯ cd NCHC_Intern_WebApp
+
+❯ pip install requirements.txt
 ```
 ### Guides
 
