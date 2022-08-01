@@ -210,7 +210,9 @@ renderer.ResetCamera()
 # create the scalar_bar
 scalar_bar = vtkScalarBarActor()
 scalar_bar.SetOrientationToHorizontal()
-scalar_bar.SetLookupTable(mesh_lut)
+scalar_bar.SetLookupTable(warpVector_mapper.GetLookupTable())
+scalar_bar.SetTitle(" ")
+scalar_bar.SetNumberOfLabels(8)
 
 renderer.AddActor(scalar_bar)
 
@@ -723,7 +725,7 @@ def warpVector_card():
 # -----------------------------------------------------------------------------
 
 with SinglePageWithDrawerLayout(server) as layout:
-    layout.title.set_text("App")
+    layout.title.set_text("NCHC_Trame")
 
     with layout.toolbar:
         # toolbar components
