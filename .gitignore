@@ -129,4 +129,7 @@ dmypy.json
 .pyre/
 
 # PDF
-README.pdf
+*.pdf
+
+# Zip
+*.zip
