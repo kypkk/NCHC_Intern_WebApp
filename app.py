@@ -478,7 +478,7 @@ def pipeline_widget():
     )
 
 def ui_card(title, ui_name):
-    with vuetify.VCard(v_show=f"active_ui == {ui_name}"):
+    with vuetify.VCard(v_show=f"active_ui == '{ui_name}'"):
         vuetify.VCardTitle(
             title,
             classes="grey lighten-1 py-1 grey--text text--darken-3",
