@@ -37,9 +37,6 @@
 - Vuetify
   - A [**Vue**](https://vuejs.org) UI Library with beautifully handcrafted Material Components
 
-### APP_URL
-
-#### http://localhost:8080
 
 <br>
 
